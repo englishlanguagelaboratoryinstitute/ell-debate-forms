@@ -509,7 +509,7 @@ footer {
         <div class="form-error" id="formError">Please select an answer for both questions before submitting.</div>
 
         <form id="voteForm"
-              action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf3vj7ylFozCPVGZBahnnszpCsP5Bav3UmugU77cped5ZD1KA/formResponse"
+              action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdki6RJ0INFylxZqdRs9jPhowJGGqPaXgKIbsTI35J4-3UARw/formResponse"
               method="POST"
               novalidate>
 
@@ -519,12 +519,12 @@ footer {
                 <p class="question-title">Which TEAM won this match?</p>
                 <div class="option-list" data-group="winner">
                     <label class="option-card">
-                        <input type="radio" name="entry.906434186" value="TEAM 7" required>
+                        <input type="radio" name="entry.647053676" value="TEAM 7" required>
                         <span class="option-radio"></span>
                         <span class="option-text">TEAM 7</span>
                     </label>
                     <label class="option-card">
-                        <input type="radio" name="entry.906434186" value="TEAM 8" required>
+                        <input type="radio" name="entry.647053676" value="TEAM 8" required>
                         <span class="option-radio"></span>
                         <span class="option-text">TEAM 8</span>
                     </label>
@@ -537,12 +537,12 @@ footer {
                 <p class="question-title">Who won Best Speaker for this match?</p>
                 <div class="option-list" data-group="speaker">
                     <label class="option-card">
-                        <input type="radio" name="entry.582642887" value="The best speaker of TEAM 7" required>
+                        <input type="radio" name="entry.119198829" value="The best speaker of TEAM 7" required>
                         <span class="option-radio"></span>
                         <span class="option-text">The best speaker of TEAM 7</span>
                     </label>
                     <label class="option-card">
-                        <input type="radio" name="entry.582642887" value="The best speaker of TEAM 8" required>
+                        <input type="radio" name="entry.119198829" value="The best speaker of TEAM 8" required>
                         <span class="option-radio"></span>
                         <span class="option-text">The best speaker of TEAM 8</span>
                     </label>
@@ -640,8 +640,8 @@ document.getElementById('voteForm').addEventListener('submit', function(e){
     var label = btn.querySelector('.label-text');
     var errorBox = document.getElementById('formError');
 
-    var winnerChecked  = form.querySelector('input[name="entry.906434186"]:checked');
-    var speakerChecked = form.querySelector('input[name="entry.582642887"]:checked');
+    var winnerChecked  = form.querySelector('input[name="entry.647053676"]:checked');
+    var speakerChecked = form.querySelector('input[name="entry.119198829"]:checked');
 
     if (!winnerChecked || !speakerChecked) {
         errorBox.classList.add('show');
