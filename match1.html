@@ -468,13 +468,13 @@ footer {
      HEADER
 ════════════════════════════════════════════ -->
 <header class="header">
-    <div class="logo-group">
+    <a class="logo-group" href="https://englishlanguagelaboratoryinstitute.github.io/spellingbchampionshipregistration/logo.png" target="_blank" rel="noopener">
         <div class="logo-mark" id="logoMark">
-            <img src="YOUR_LOGO_URL_HERE" alt="Logo" id="logoImg" onerror="this.remove()">
+            <img src="https://englishlanguagelaboratoryinstitute.github.io/spellingbchampionshipregistration/logo.png" alt="Logo" id="logoImg" onerror="this.remove()">
             <span id="logoFallback" style="display:none">E</span>
         </div>
         <span class="logo-name">ELL GRAND DEBATE</span>
-    </div>
+    </a>
     <span class="header-pill">✦ Match 1 Voting</span>
 </header>
 
@@ -607,9 +607,33 @@ footer {
     });
 })();
 
+/* ── Double-vote guard ───────────────────────────────── */
+var VOTE_KEY = 'ellDebateVoted_match1';
+
+function showAlreadyVotedScreen(){
+    document.getElementById('formContainer').style.display = 'none';
+    var success = document.getElementById('successScreen');
+    success.style.display = 'block';
+    var heading = success.querySelector('h2');
+    var para = success.querySelector('p');
+    if (heading) heading.textContent = 'You Already Voted';
+    if (para) para.innerHTML = 'This browser already submitted a ballot for Match 1.<br>Each device gets one vote — thanks for participating!';
+}
+
+(function(){
+    if (localStorage.getItem(VOTE_KEY) === 'true') {
+        showAlreadyVotedScreen();
+    }
+})();
+
 /* ── Form submission ─────────────────────────────────── */
 document.getElementById('voteForm').addEventListener('submit', function(e){
     e.preventDefault();
+
+    if (localStorage.getItem(VOTE_KEY) === 'true') {
+        showAlreadyVotedScreen();
+        return;
+    }
 
     var form  = e.target;
     var btn   = document.getElementById('submitBtn');
@@ -636,6 +660,7 @@ document.getElementById('voteForm').addEventListener('submit', function(e){
         mode   : 'no-cors'
     })
     .then(function(){
+        localStorage.setItem(VOTE_KEY, 'true');
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('successScreen').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
