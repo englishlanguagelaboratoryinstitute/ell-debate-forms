@@ -468,7 +468,7 @@ footer {
      HEADER
 ════════════════════════════════════════════ -->
 <header class="header">
-    <a class="logo-group" href="#" target="_blank" rel="noopener">
+    <a class="logo-group" href="https://englishlanguagelaboratoryinstitute.github.io/spellingbchampionshipregistration/logo.png" target="_blank" rel="noopener">
         <div class="logo-mark" id="logoMark">
             <img src="https://englishlanguagelaboratoryinstitute.github.io/spellingbchampionshipregistration/logo.png" alt="Logo" id="logoImg" onerror="this.remove()">
             <span id="logoFallback" style="display:none">E</span>
@@ -652,24 +652,33 @@ document.getElementById('voteForm').addEventListener('submit', function(e){
     btn.classList.add('loading');
     if (label) label.textContent = 'Submitting…';
 
-    var formData = new FormData(form);
+    // Submit via a hidden iframe instead of fetch(no-cors). A real
+    // multipart form POST through an iframe target is the most reliable
+    // cross-origin method for Google's formResponse endpoint — fetch
+    // with no-cors has been observed to silently drop fields on some
+    // forms even when the request looks identical.
+    var iframeName = 'hiddenSubmitFrame';
+    var iframe = document.getElementById(iframeName);
+    if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.name = iframeName;
+        iframe.id = iframeName;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+    }
 
-    fetch(form.action, {
-        method : 'POST',
-        body   : formData,
-        mode   : 'no-cors'
-    })
-    .then(function(){
+    form.target = iframeName;
+    form.submit();
+
+    // We can't read the iframe's response (cross-origin), so treat
+    // submission as successful once the browser has dispatched the
+    // POST. A short delay keeps the loading state visible briefly.
+    setTimeout(function(){
         localStorage.setItem(VOTE_KEY, 'true');
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('successScreen').style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
-    .catch(function(){
-        btn.classList.remove('loading');
-        if (label) label.textContent = 'Submit My Vote';
-        alert('Connection error. Please check your internet and try again.');
-    });
+    }, 900);
 });
 
 </script>
