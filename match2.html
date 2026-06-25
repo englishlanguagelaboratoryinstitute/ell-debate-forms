@@ -608,7 +608,12 @@ footer {
 })();
 
 /* ── Double-vote guard ───────────────────────────────── */
-var VOTE_KEY = 'ellDebateVoted_match2';
+// EVENT_ID: change this string for each new debate event (e.g.
+// 'spring2027', 'fall2026'). Changing it automatically resets the
+// double-vote guard for everyone, since old keys no longer match —
+// no need to clear anything on voters' devices.
+var EVENT_ID = 'event1';
+var VOTE_KEY = 'ellDebateVoted_match2_' + EVENT_ID;
 
 function showAlreadyVotedScreen(){
     document.getElementById('formContainer').style.display = 'none';
